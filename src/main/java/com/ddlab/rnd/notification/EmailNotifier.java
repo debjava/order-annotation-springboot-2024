@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Order(1)
-public class EmailNotification implements Notification {
+public class EmailNotifier implements Notifier {
 	@Override
-	public void send(String message) {
+	public void notify(String message) {
 		System.out.println(message + " sent on email to the user");
 	}
 }

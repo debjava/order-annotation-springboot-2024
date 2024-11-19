@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Order(2)
-public class SmsNotification implements Notification {
+public class SmsNotifier implements Notifier {
 	@Override
-	public void send(String message) {
+	public void notify(String message) {
 		System.out.println(message + " sent via sms to the user");
 	}
 }

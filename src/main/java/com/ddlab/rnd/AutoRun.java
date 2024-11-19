@@ -3,12 +3,12 @@ package com.ddlab.rnd;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import com.ddlab.rnd.notification.Notification;
+import com.ddlab.rnd.handler.Handler;
+import com.ddlab.rnd.notification.Notifier;
 import com.ddlab.rnd.validation.Validation;
 import com.ddlab.rnd.vo.CoreData;
 
@@ -20,7 +20,10 @@ public class AutoRun {
 	private List<Validation> valdnList;
 	
 	@Autowired
-	private List<Notification> notificationList;
+	private List<Notifier> notificationList;
+	
+	@Autowired
+	private List<Handler> handlers;
 	
 	public void check1() {
 		CoreData data = new CoreData();
@@ -32,14 +35,19 @@ public class AutoRun {
 	
 	public void check2() {
 		String message = "Account created successfully ...";
-		notificationList.forEach( val -> val.send(message));
+		notificationList.forEach( val -> val.notify(message));
+	}
+	
+	public void check3() {
+		handlers.forEach( handler -> handler.handle());
 	}
 	
 	@EventListener(ApplicationReadyEvent.class)
 	public void run() {
 		System.out.println("Application running ...");
-		check1();
-		check2();
+//		check1();
+//		check2();
+		check3();
 	}
 
 }
